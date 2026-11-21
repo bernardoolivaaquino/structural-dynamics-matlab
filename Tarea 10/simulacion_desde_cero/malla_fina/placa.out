@@ -1,0 +1,1194 @@
+
+ Ansys Mechanical Enterprise Academic Student      
+
+
+ *------------------------------------------------------------------*
+ |                                                                  |
+ |   W E L C O M E   T O   T H E   A N S Y S (R)  P R O G R A M     |
+ |                                                                  |
+ *------------------------------------------------------------------*
+
+
+
+
+ ***************************************************************
+ *         ANSYS MAPDL 2026 R1          LEGAL NOTICES          *
+ ***************************************************************
+ *                                                             *
+ * Copyright (c) 2026 Synopsys, Inc. and ANSYS, Inc.           *
+ * All rights reserved.                                        *
+ * Unauthorized use, distribution or duplication is            *
+ * prohibited.                                                 *
+ *                                                             *
+ * Ansys is a registered trademark of Ansys, Inc. or its       *
+ * subsidiaries in the United States or other countries.       *
+ * See the Ansys, Inc. online documentation or the Ansys, Inc. *
+ * documentation CD or online help for the complete Legal      *
+ * Notice.                                                     *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * THIS ANSYS SOFTWARE PRODUCT AND PROGRAM DOCUMENTATION       *
+ * INCLUDE TRADE SECRETS AND CONFIDENTIAL AND PROPRIETARY      *
+ * PRODUCTS OF ANSYS, INC., ITS SUBSIDIARIES, OR LICENSORS.    *
+ * The software products and documentation are furnished by    *
+ * Ansys, Inc. or its subsidiaries under a software license    *
+ * agreement that contains provisions concerning               *
+ * non-disclosure, copying, length and nature of use,          *
+ * compliance with exporting laws, warranties, disclaimers,    *
+ * limitations of liability, and remedies, and other           *
+ * provisions.  The software products and documentation may be *
+ * used, disclosed, transferred, or copied only in accordance  *
+ * with the terms and conditions of that software license      *
+ * agreement.                                                  *
+ *                                                             *
+ * Ansys, Inc. is a UL registered                              *
+ * ISO 9001:2015 company.                                      *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * This product is subject to U.S. laws governing export and   *
+ * re-export.                                                  *
+ *                                                             *
+ * For U.S. Government users, except as specifically granted   *
+ * by the Ansys, Inc. software license agreement, the use,     *
+ * duplication, or disclosure by the United States Government  *
+ * is subject to restrictions stated in the Ansys, Inc.        *
+ * software license agreement and FAR 12.212 (for non-DOD      *
+ * licenses).                                                  *
+ *                                                             *
+ ***************************************************************
+
+ 2026 R1 
+     
+ Point Releases and Patches installed:   
+     
+ Ansys, Inc. License Manager 2026 R1 
+ Discovery (full install) 2026 R1
+ Core WB Files 2026 R1   
+ optiSLang Core UI 2026 R1   
+ CFX (includes CFD-Post) 2026 R1 
+ Chemkin 2026 R1 
+ EnSight 2026 R1 
+ FENSAP-ICE 2026 R1  
+ Fluent (includes CFD-Post) 2026 R1  
+ Polyflow (includes CFD-Post) 2026 R1
+ Forte (includes EnSight) 2026 R1
+ Rocky 2026 R1   
+ TurboGrid 2026 R1   
+ ACIS Geometry Interface 2026 R1 
+ AutoCAD Geometry Interface 2026 R1  
+ Catia, Version 4 Geometry Interface 2026 R1 
+ Catia, Version 5 Geometry Interface 2026 R1 
+ Catia, Version 6 Geometry Interface 2026 R1 
+ Creo Elements/Direct Modeling Geometry Interface 2026 R1
+ Creo Parametric Geometry Interface 2026 R1  
+ Inventor Geometry Interface 2026 R1 
+ JTOpen Geometry Interface 2026 R1   
+ NX Geometry Interface 2026 R1   
+ Parasolid Geometry Interface  2026 R1   
+ Solid Edge Geometry Interface 2026 R1   
+ SOLIDWORKS Geometry Interface 2026 R1   
+ Speos 2026 R1   
+ SpaceClaim 2026 R1  
+ Speos RPC 2026 R1   
+ Zemax OpticStudio 2026 R1   
+ Dynamic Reporting 2026 R1   
+ Aqwa 2026 R1
+ Autodyn 2026 R1 
+ Material Calibration App 2026 R1
+ Mechanical Products 2026 R1 
+ Motion 2026 R1  
+ Academic Student 2026 R1
+
+
+          *****  MAPDL COMMAND LINE ARGUMENTS  *****
+  INITIAL JOBNAME              = placa                                                                                                                                                                                                                                                   
+  BATCH MODE REQUESTED (-b)    = LIST
+  INPUT FILE COPY MODE (-c)    = COPY
+  SHARED MEMORY PARALLEL REQUESTED
+    SINGLE PROCESS WITH   4 THREADS REQUESTED
+    TOTAL OF     4 CORES REQUESTED
+  INPUT FILE NAME              = C:\Users\oliva\AppData\Local\Temp\claude\59cc8b8309dc54d2\00ef2486-698b-4082-a549-ad667659c05d\scratchpad\runs\fina2\placa_modal.inp
+  OUTPUT FILE NAME             = C:\Users\oliva\AppData\Local\Temp\claude\59cc8b8309dc54d2\00ef2486-698b-4082-a549-ad667659c05d\scratchpad\runs\fina2\placa.out
+
+ RELEASE= 2026 R1              BUILD= 26.1      UP20260202   VERSION=WINDOWS x64 
+ CURRENT JOBNAME=placa  20:50:08  NOV 10, 2026  Elapsed Time=       0.094
+
+     1  hs = 3  
+     2  nd = 3  
+     3  nl = 3  
+     4  ! ================================================================  
+     5  !  Analisis modal libre-libre de la placa PLA-001 (desde cero)  
+     6  !  Unidades SI: m, kg, s, Pa
+     7  !  Geometria segun plano PLA-001 (cotas en mm convertidas a m)  
+     8  ! ================================================================  
+     9  /BATCH  
+    10  /TITLE,Placa PLA-001 - Analisis modal libre (Al 2024-T3)
+    11  /PREP7  
+    12  mm = 1e-3   
+    13      
+    14  ! ---------- Dimensiones del plano ----------   
+    15  L   = 202*mm        ! largo (X) 
+    16  W   = 188*mm        ! ancho (Y) 
+    17  T   = 12.7*mm       ! espesor (Z)   
+    18  r1  = 4.00*mm/2     ! barrenos chicos ??4.00 (x63)  
+    19  r2  = 9.53*mm/2     ! barrenos grandes ??9.53 = 3/8 in (x2) 
+    20  x0  = 27*mm         ! primera columna desde el borde izquierdo  
+    21  dx  = 25*mm         ! 25 x 6
+    22  y0  = 18*mm         ! primera fila desde el borde inferior  
+    23  dy  = 18.5*mm       ! 18.5 x 8  
+    24  ! barrenos grandes: el inferior a 62 del borde derecho y 33 del inferior,   
+    25  ! el superior 101.60 a la izquierda y 101.60 arriba del inferior
+    26  xb2 = L-62*mm   
+    27  yb2 = 33*mm 
+    28  xb1 = xb2-101.6*mm  
+    29  yb1 = yb2+101.6*mm  
+    30      
+    31  ! ---------- Material: Aluminio 2024-T3 ----------  
+    32  MP,EX,1,73.1e9  
+    33  MP,PRXY,1,0.33  
+    34  MP,DENS,1,2780  
+    35      
+    36  ! ---------- Elementos ----------   
+    37  ET,1,MESH200,6       ! cuadrilatero de 8 nodos solo para mallar la cara 
+    38  ET,2,SOLID186        ! hexaedro cuadratico de 20 nodos  
+    39      
+    40  ! ---------- Geometria 2D (cara) ---------- 
+    41  RECTNG,0,L,0,W  
+    42  *DO,i,1,7   
+    43    *DO,j,1,9 
+    44      CYL4,x0+(i-1)*dx,y0+(j-1)*dy,r1 
+    45    *ENDDO
+    46  *ENDDO  
+    47  CYL4,xb1,yb1,r2 
+    48  CYL4,xb2,yb2,r2 
+    49  ASEL,S,AREA,,2,66   
+    50  CM,AGUJ,AREA
+    51  ALLSEL  
+    52  ASBA,1,AGUJ 
+    53  ALLSEL  
+    54      
+    55  ! ---------- Malla ----------   
+    56  ! (la version Student limita el modelo a 128 000 nodos) 
+    57  ! Parametros de malla; se pueden cambiar desde la linea de comandos 
+    58  ! (p. ej. MAPDL -b -i placa_modal.inp -hs 3 -nd 3 -nl 3)
+    59  *GET,_t,PARM,hs,TYPE
+    60  *IF,_t,EQ,-1,THEN   
+    61    hs = 4             ! tamano de elemento en la cara (mm)   
+    62  *ENDIF  
+    63  *GET,_t,PARM,nd,TYPE
+    64  *IF,_t,EQ,-1,THEN   
+    65    nd = 2             ! divisiones por cuarto de barreno chico   
+    66  *ENDIF  
+    67  *GET,_t,PARM,nl,TYPE
+    68  *IF,_t,EQ,-1,THEN   
+    69    nl = 3             ! capas de elementos en el espesor 
+    70  *ENDIF  
+    71  ESIZE,hs*mm 
+    72  LSEL,S,RADIUS,,r1   
+    73  LESIZE,ALL,,,nd      ! 4*nd divisiones por barreno chico
+    74  LSEL,S,RADIUS,,r2   
+    75  LESIZE,ALL,,,2*nd    ! 8*nd divisiones por barreno grande   
+    76  ALLSEL  
+    77  TYPE,1  
+    78  MSHAPE,0,2D 
+    79  MSHKEY,0
+    80  AMESH,ALL   
+    81  ! extrusion a traves del espesor: nl capas de hexaedros cuadraticos 
+    82  TYPE,2  
+    83  MAT,1   
+    84  EXTOPT,ESIZE,nl,0   
+    85  EXTOPT,ACLEAR,1 
+    86  VEXT,ALL,,,0,0,T
+    87  ACLEAR,ALL  
+    88  ETDELE,1
+    89  ALLSEL  
+    90      
+    91  *GET,nn,NODE,0,COUNT
+    92  *GET,ne,ELEM,0,COUNT
+    93  VSUM
+    94  *GET,vtot,VOLU,0,VOLU   
+    95  FINISH  
+    96      
+    97  ! ---------- Solucion modal libre (sin restricciones) ----------
+    98  /SOLU   
+    99  ANTYPE,MODAL
+   100  MODOPT,LANB,16,0,,,OFF   ! 16 modos desde 0 Hz: 6 de cuerpo rigido + 10 elasticos   
+   101  MXPAND,16,,,YES 
+   102  SOLVE   
+   103  *DIM,frq,ARRAY,16   
+   104  *DO,k,1,16  
+   105    *GET,frq(k),MODE,k,FREQ   
+   106  *ENDDO  
+   107  FINISH  
+   108      
+   109  ! ---------- Reporte en texto ----------
+   110  *CFOPEN,resultados,txt  
+   111  *VWRITE,nn,ne   
+   112  ('Nodos: ',F10.0,'   Elementos: ',F10.0)
+   113  *VWRITE,vtot*1e9,vtot*2780  
+   114  ('Volumen (mm3): ',F12.1,'   Masa (kg): ',F10.5)
+   115  *VWRITE 
+   116  ('Modo   Frecuencia (Hz)')  
+   117  *VWRITE,hs,nd*4,nl  
+   118  ('Malla: ESIZE (mm)=',F5.2,'  div. barreno chico=',F4.0,'  capas=',F3.0)
+   119  *DO,k,1,16  
+   120    fk = frq(k)   
+   121  *VWRITE,k,fk
+   122  (F4.0,F20.4)
+   123  *ENDDO  
+   124  *CFCLOS 
+   125      
+   126  ! ---------- Imagenes: malla y formas modales ----------
+   127  /POST1  
+   128  /SHOW,PNG   
+   129  /GFILE,1200 
+   130  /RGB,INDEX,100,100,100,0
+   131  /RGB,INDEX,0,0,0,15 
+   132  /VIEW,1,1,-1.2,1.4  
+   133  /ANG,1  
+   134  /PLOPTS,DATE,0  
+   135  /TRIAD,LBOT 
+   136  /TITLE,Malla: SOLID186 - %nn% nodos, %ne% elementos 
+   137  EPLOT   
+   138  /GLINE,1,-1            ! sin lineas de elementos en los contornos   
+   139  /EDGE,1,1   
+   140  /DSCALE,1,0.008        ! escala de deformacion (modos normalizados a masa)  
+   141  *DO,k,1,16  
+   142    SET,1,k   
+   143    fk = frq(k)   
+   144    *IF,k,LE,6,THEN   
+   145      /TITLE,Modo %k% (cuerpo rigido) - f = %fk% Hz   
+   146    *ELSE 
+   147      /TITLE,Modo elastico %k-6% - f = %fk% Hz
+   148    *ENDIF
+   149    PLNSOL,U,SUM,1
+   150  *ENDDO  
+   151  /SHOW,CLOSE 
+   152  FINISH  
+
+ RUN SETUP PROCEDURE FROM FILE= B:\ANSYS\ANSYS Inc\ANSYS Student\v261\Ansys\apdl\start.ans
+
+ /INPUT FILE= B:\ANSYS\ANSYS Inc\ANSYS Student\v261\Ansys\apdl\start.ans  LINE=       0
+
+ PARAMETER HS =     3.000000000    
+
+ PARAMETER ND =     3.000000000    
+
+ PARAMETER NL =     3.000000000    
+
+ *** WARNING ***                         ELAPSED TIME =       5.785   TIME= 20:50:08
+ The /BATCH command must be the first line of input.  The /BATCH command 
+ is ignored.                                                             
+
+ TITLE= 
+ Placa PLA-001 - Analisis modal libre (Al 2024-T3)                             
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2026 R1          26.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   20:50:08  NOV 10, 2026 Elapsed Time=      5.785
+
+ Placa PLA-001 - Analisis modal libre (Al 2024-T3)                             
+
+
+
+          ***** MAPDL ANALYSIS DEFINITION (PREP7) *****
+
+ PARAMETER MM =    0.1000000000E-02
+
+ PARAMETER L =    0.2020000000    
+
+ PARAMETER W =    0.1880000000    
+
+ PARAMETER T =    0.1270000000E-01
+
+ PARAMETER R1 =    0.2000000000E-02
+
+ PARAMETER R2 =    0.4765000000E-02
+
+ PARAMETER X0 =    0.2700000000E-01
+
+ PARAMETER DX =    0.2500000000E-01
+
+ PARAMETER Y0 =    0.1800000000E-01
+
+ PARAMETER DY =    0.1850000000E-01
+
+ PARAMETER XB2 =    0.1400000000    
+
+ PARAMETER YB2 =    0.3300000000E-01
+
+ PARAMETER XB1 =    0.3840000000E-01
+
+ PARAMETER YB1 =    0.1346000000    
+
+ MATERIAL          1     EX   =  0.7310000E+11  
+
+ MATERIAL          1     PRXY =  0.3300000      
+
+ MATERIAL          1     DENS =   2780.000      
+
+ ELEMENT TYPE          1 IS MESH200      4-NODE QUAD MESHING FACET   
+  KEYOPT( 1- 6)=        6      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ ELEMENT TYPE          2 IS SOLID186     3-D 20-NODE STRUCTURAL SOLID
+  KEYOPT( 1- 6)=        0      0      0        0      0      0
+  KEYOPT( 7-12)=        0      0      0        0      0      0
+  KEYOPT(13-18)=        0      0      0        0      0      0
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ  
+  THREE-DIMENSIONAL MODEL
+
+ CREATE A PLANAR RECTANGULAR AREA WITH
+ X-DISTANCES FROM      0.000000000     TO     0.2020000000    
+ Y-DISTANCES FROM      0.000000000     TO     0.1880000000    
+
+      OUTPUT AREA =     1
+
+ *DO LOOP ON PARAMETER= I FROM  1.0000     TO  7.0000     BY  1.0000    
+
+ *DO LOOP ON PARAMETER= J FROM  1.0000     TO  9.0000     BY  1.0000    
+
+ CREATE A CIRCULAR AREA WITH
+ INNER RADIUS         =      0.000000000    
+ OUTER RADIUS         =     0.2000000000E-02
+ STARTING THETA ANGLE =      0.000000000    
+ ENDING   THETA ANGLE =      360.0000000    
+      OUTPUT AREA =     2
+
+ *ENDDO  INDEX= J                               
+
+ *ENDDO  INDEX= I                               
+
+ CREATE A CIRCULAR AREA WITH
+ INNER RADIUS         =      0.000000000    
+ OUTER RADIUS         =     0.4765000000E-02
+ STARTING THETA ANGLE =      0.000000000    
+ ENDING   THETA ANGLE =      360.0000000    
+      OUTPUT AREA =    65
+
+ CREATE A CIRCULAR AREA WITH
+ INNER RADIUS         =      0.000000000    
+ OUTER RADIUS         =     0.4765000000E-02
+ STARTING THETA ANGLE =      0.000000000    
+ ENDING   THETA ANGLE =      360.0000000    
+      OUTPUT AREA =    66
+
+ SELECT       FOR ITEM=AREA COMPONENT=    
+  IN RANGE         2 TO         66 STEP          1
+
+       65  AREAS (OF       66  DEFINED) SELECTED BY  ASEL  COMMAND.
+
+ DEFINITION OF COMPONENT = AGUJ      ENTITY=AREA
+
+ SELECT ALL ENTITIES OF TYPE= ALL  AND BELOW
+
+ SUBTRACT AREAS
+
+      AREA NUMBERS TO BE OPERATED ON =       1
+      AREAS OPERATED ON WILL BE DELETED IF POSSIBLE
+      AREA NUMBERS TO BE SUBTRACTED  =       2      3      4      5      6
+      AREA NUMBERS TO BE SUBTRACTED  =       7      8      9     10     11
+      AREA NUMBERS TO BE SUBTRACTED  =      12     13     14     15     16
+      AREA NUMBERS TO BE SUBTRACTED  =      17     18     19     20     21
+      AREA NUMBERS TO BE SUBTRACTED  =      22     23     24     25     26
+      AREA NUMBERS TO BE SUBTRACTED  =      27     28     29     30     31
+      AREA NUMBERS TO BE SUBTRACTED  =      32     33     34     35     36
+      AREA NUMBERS TO BE SUBTRACTED  =      37     38     39     40     41
+      AREA NUMBERS TO BE SUBTRACTED  =      42     43     44     45     46
+      AREA NUMBERS TO BE SUBTRACTED  =      47     48     49     50     51
+      AREA NUMBERS TO BE SUBTRACTED  =      52     53     54     55     56
+      AREA NUMBERS TO BE SUBTRACTED  =      57     58     59     60     61
+      AREA NUMBERS TO BE SUBTRACTED  =      62     63     64     65     66
+      AREAS SUBTRACTED WILL BE DELETED IF POSSIBLE
+      OUTPUT AREAS =    67
+
+ *** WARNING ***                         ELAPSED TIME =       5.968   TIME= 20:50:08
+ Assembly AGUJ is deleted.                                               
+
+ SELECT ALL ENTITIES OF TYPE= ALL  AND BELOW
+
+ *GET  _T        FROM  PARM  hs        ITEM=TYPE       VALUE=  0.00000000    
+
+ *IF  _t  ( =   0.00000     )  EQ  
+      -1  ( =  -1.00000     )  THEN    
+
+ *ENDIF
+
+ *GET  _T        FROM  PARM  nd        ITEM=TYPE       VALUE=  0.00000000    
+
+ *IF  _t  ( =   0.00000     )  EQ  
+      -1  ( =  -1.00000     )  THEN    
+
+ *ENDIF
+
+ *GET  _T        FROM  PARM  nl        ITEM=TYPE       VALUE=  0.00000000    
+
+ *IF  _t  ( =   0.00000     )  EQ  
+      -1  ( =  -1.00000     )  THEN    
+
+ *ENDIF
+
+ DEFAULT ELEMENT DIVISIONS PER LINE BASED ON ELEMENT SIZE =  0.300E-02
+
+ SELECT       FOR ITEM=RADI COMPONENT=      BETWEEN 0.20000E-02 AND  0.20000E-02
+   KABS=  0.  TOLERANCE= 0.100000E-04
+
+      252  LINES (OF      264  DEFINED) SELECTED BY LSEL  COMMAND.
+
+ SET DIVISIONS ON ALL SELECTED LINES
+      TO  NDIV =    3,  SPACING RATIO =   1.000
+      (KFORCE = 0      PREVIOUS NONZERO VALUES WILL NOT BE ALTERED)
+
+ SELECT       FOR ITEM=RADI COMPONENT=      BETWEEN 0.47650E-02 AND  0.47650E-02
+   KABS=  0.  TOLERANCE= 0.238250E-04
+
+        8  LINES (OF      264  DEFINED) SELECTED BY LSEL  COMMAND.
+
+ SET DIVISIONS ON ALL SELECTED LINES
+      TO  NDIV =    6,  SPACING RATIO =   1.000
+      (KFORCE = 0      PREVIOUS NONZERO VALUES WILL NOT BE ALTERED)
+
+ SELECT ALL ENTITIES OF TYPE= ALL  AND BELOW
+
+ ELEMENT TYPE SET TO         1
+ PRODUCE ALL QUADRILATERAL ELEMENTS IN 2D.
+ USE THE FREE MESHER.
+
+ GENERATE NODES AND ELEMENTS   IN  ALL  SELECTED AREAS    
+    ** AREA    67 MESHED WITH    17790 QUADRILATERALS,       16 TRIANGLES **
+
+ NUMBER OF AREAS MESHED     =          1
+ MAXIMUM NODE NUMBER        =      18267
+ MAXIMUM ELEMENT NUMBER     =      17806
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count     17806 MESH200   |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio              17806              0             0         0.00 %
+  Parallel Deviation        17790              4             0         0.02 %
+  Maximum Angle             17806              2             0         0.01 %
+  Jacobian Ratio            17806              0             0         0.00 %
+  Warping Factor            17790              0             0         0.00 %
+
+  Any                       17806              6             0         0.03 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         ELAPSED TIME =      24.203   TIME= 20:50:27
+ Shape testing revealed that 6 of the 17806 new or modified elements     
+ violate shape warning limits.  To review test results, please see the   
+ output file or issue the CHECK command.                                 
+
+ ELEMENT TYPE SET TO         2
+
+ MATERIAL NUMBER SET TO         1
+
+ EXTRUSION MESH ELEMENT DIVISIONS IN EXTRUSION DIRECTION =    3
+ EXTRUSION MESH ELEMENT SPACING RATIO IS NOT SET
+
+ EXTRUSION MESH OPERATIONS WILL CLEAR INITIAL AREA MESHES
+
+ EXTRUDE ALL AREAS 
+      IN DIRECTION   0.000000    ,  0.000000    , 0.1270000E-01
+      SCALED         0.000000    ,  0.000000    ,  0.000000    
+
+ *** NOTE ***                            ELAPSED TIME =      24.547   TIME= 20:50:27
+ SOLID186 element 17807 (and possibly others) does not have all of its   
+ midside nodes supplied.  In some situations, this may reduce solution   
+ accuracy.                                                               
+
+ ------------------------------------------------------------------------------
+            <<<<<<          SHAPE TESTING SUMMARY           >>>>>>
+            <<<<<<       FOR NEW OR MODIFIED ELEMENTS       >>>>>>
+ ------------------------------------------------------------------------------
+                    --------------------------------------
+                    |  Element count     53418 SOLID186  |
+                    --------------------------------------
+
+  Test                Number tested  Warning count  Error count    Warn+Err %
+  ----                -------------  -------------  -----------    ----------
+  Aspect Ratio              53418             18             0         0.03 %
+  Parallel Deviation        53418              0             0         0.00 %
+  Maximum Angle             53418              3             0         0.01 %
+  Jacobian Ratio            53418              0             0         0.00 %
+  Warping Factor            53418              0             0         0.00 %
+
+  Any                       53418             21             0         0.04 %
+ ------------------------------------------------------------------------------
+
+ *** WARNING ***                         ELAPSED TIME =      25.332   TIME= 20:50:28
+ Shape testing revealed that 21 of the 53418 new or modified elements    
+ violate shape warning limits.  To review test results, please see the   
+ output file or issue the CHECK command.                                 
+      MAXIMUM ELEMENT NUMBER COMPRESSED FROM     71224 TO     53418
+
+ MAXIMUM NODE NUMBER        =    127869
+ MAXIMUM ELEMENT NUMBER     =     53418
+
+    CLEAR NODES AND ELEMENTS FROM  ALL  SELECTED AREAS    
+
+ *** NOTE ***                            ELAPSED TIME =      25.388   TIME= 20:50:28
+ No areas were cleared by the ACLEAR operation.                          
+
+ DELETE ELEMENT TYPES FROM          1 TO          1 BY          1
+
+ CURRENT NODAL DOF SET IS  UX    UY    UZ  
+  THREE-DIMENSIONAL MODEL
+
+ SELECT ALL ENTITIES OF TYPE= ALL  AND BELOW
+
+ *GET  NN        FROM  NODE  ITEM=COUN       VALUE=  127869.000     
+
+ *GET  NE        FROM  ELEM  ITEM=COUN           VALUE=  53418.0000    
+
+ PRINT MASS PROPERTIES ASSOCIATED WITH THE CURRENTLY SELECTED VOLUMES
+
+  TOTAL NUMBER OF VOLUMES SELECTED =     1  (OUT OF      1 DEFINED)
+
+***********************************************
+
+  SUMMATION OF ALL SELECTED VOLUMES
+      TOTAL VOLUME =  0.47043E-03
+      TOTAL MASS   =   1.3078    
+      CENTER OF MASS:  XC= 0.10102      YC= 0.94082E-01  ZC= 0.63500E-02
+
+                     *** MOMENTS OF INERTIA ***
+
+         ABOUT ORIGIN     ABOUT CENTER OF MASS    PRINCIPAL
+     IXX =   0.15518E-01       0.38891E-02       0.38889E-02
+     IYY =   0.17893E-01       0.44930E-02       0.44933E-02
+     IZZ =   0.33270E-01       0.83470E-02       0.83470E-02
+     IXY =  -0.12442E-01      -0.12445E-04
+     IYZ =  -0.78130E-03        0.0000    
+     IZX =  -0.83895E-03        0.0000    
+
+     PRINCIPAL ORIENTATION VECTORS (X,Y,Z):
+       1.000  0.021  0.000   -0.021  1.000  0.000    0.000  0.000  1.000
+       (THXY=    1.180  THYZ=    0.000  THZX=    0.000)
+
+ *GET  VTOT      FROM  VOLU  ITEM=VOLU       VALUE= 0.470429056E-03
+
+
+ ***** ROUTINE COMPLETED *****  ELAPSED TIME =        25.506
+
+
+
+ *****  MAPDL SOLUTION ROUTINE  *****
+
+
+ PERFORM A MODAL ANALYSIS
+  THIS WILL BE A NEW ANALYSIS
+
+
+ USE SYM. BLOCK LANCZOS MODE EXTRACTION METHOD
+  EXTRACT    16 MODES
+  NORMALIZE THE MODE SHAPES TO THE MASS MATRIX
+
+
+ NUMBER OF MODES TO EXPAND=    16
+  CALCULATE ELEMENT RESULTS AND NODAL DOF SOLUTION
+
+ *****  MAPDL SOLVE    COMMAND  *****
+
+ *** WARNING ***                         ELAPSED TIME =      25.645   TIME= 20:50:28
+ Previous testing revealed that 21 of the 53418 selected elements        
+ violate shape warning limits.  To review warning messages, please see   
+ the output or error file, or issue the CHECK command.                   
+
+ *** NOTE ***                            ELAPSED TIME =      25.645   TIME= 20:50:28
+ The model data was checked and warning messages were found.             
+  Please review output or errors file (                                  
+ C:\Users\oliva\AppData\Local\Temp\claude\59cc8b8309dc54d2\00ef2486-698b 
+ -4082-a549-ad667659c05d\scratchpad\runs\fina2\placa.err ) for these     
+ warning messages.                                                       
+
+ *** SELECTION OF ELEMENT TECHNOLOGIES FOR APPLICABLE ELEMENTS ***
+                ---GIVE SUGGESTIONS ONLY---
+
+ ELEMENT TYPE         2 IS SOLID186. KEYOPT(2) IS ALREADY SET AS SUGGESTED.
+
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2026 R1          26.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   20:50:28  NOV 10, 2026 Elapsed Time=     25.653
+
+ Placa PLA-001 - Analisis modal libre (Al 2024-T3)                             
+
+
+
+                       S O L U T I O N   O P T I O N S
+
+   PROBLEM DIMENSIONALITY. . . . . . . . . . . . .3-D                  
+   DEGREES OF FREEDOM. . . . . . UX   UY   UZ  
+   ANALYSIS TYPE . . . . . . . . . . . . . . . . .MODAL                
+      EXTRACTION METHOD. . . . . . . . . . . . . .BLOCK LANCZOS
+   NUMBER OF MODES TO EXTRACT. . . . . . . . . . .    16
+   GLOBALLY ASSEMBLED MATRIX . . . . . . . . . . .SYMMETRIC  
+   NUMBER OF MODES TO EXPAND . . . . . . . . . . .    16
+   ELEMENT RESULTS CALCULATION . . . . . . . . . .ON 
+
+ *** WARNING ***                         ELAPSED TIME =      25.677   TIME= 20:50:28
+ No constraints have been defined using the D command.                   
+
+ *** NOTE ***                            ELAPSED TIME =      25.677   TIME= 20:50:28
+ The step data was checked and warning messages were found.              
+  Please review output or errors file (                                  
+ C:\Users\oliva\AppData\Local\Temp\claude\59cc8b8309dc54d2\00ef2486-698b 
+ -4082-a549-ad667659c05d\scratchpad\runs\fina2\placa.err ) for these     
+ warning messages.                                                       
+
+ *** NOTE ***                            ELAPSED TIME =      25.677   TIME= 20:50:28
+ The conditions for direct assembly have been met.  No .emat or .erot    
+ files will be produced.                                                 
+
+                      L O A D   S T E P   O P T I O N S
+
+   LOAD STEP NUMBER. . . . . . . . . . . . . . . .     1
+   THERMAL STRAINS INCLUDED IN THE LOAD VECTOR . .   YES
+   PRINT OUTPUT CONTROLS . . . . . . . . . . . . .NO PRINTOUT
+   DATABASE OUTPUT CONTROLS. . . . . . . . . . . .ALL DATA WRITTEN
+
+
+
+                         ***********  PRECISE MASS SUMMARY  ***********
+
+   TOTAL RIGID BODY MASS MATRIX ABOUT ORIGIN
+               Translational mass               |   Coupled translational/rotational mass
+         1.3091        0.0000        0.0000     |     0.0000       0.83128E-02  -0.12316    
+         0.0000        1.3091        0.0000     |   -0.83128E-02    0.0000       0.13225    
+         0.0000        0.0000        1.3091     |    0.12316      -0.13225        0.0000    
+     ------------------------------------------ | ------------------------------------------
+                                                |         Rotational mass (inertia)
+                                                |    0.15532E-01  -0.12455E-01  -0.83980E-03
+                                                |   -0.12455E-01   0.17910E-01  -0.78207E-03
+                                                |   -0.83980E-03  -0.78207E-03   0.33301E-01
+
+   TOTAL MASS =  1.3091    
+     The mass principal axes coincide with the global Cartesian axes
+
+   CENTER OF MASS (X,Y,Z)=   0.10102       0.94080E-01   0.63500E-02
+
+   TOTAL INERTIA ABOUT CENTER OF MASS
+        0.38922E-02  -0.12302E-04  -0.13010E-17
+       -0.12302E-04   0.44963E-02   0.11493E-16
+       -0.13010E-17   0.11493E-16   0.83534E-02
+
+   PRINCIPAL INERTIAS =   0.38920E-02   0.44966E-02   0.83534E-02
+   ORIENTATION VECTORS OF THE INERTIA PRINCIPAL AXES IN GLOBAL CARTESIAN
+     ( 1.000, 0.020, 0.000) (-0.020, 1.000,-0.000) (-0.000, 0.000, 1.000) 
+
+
+  *** MASS SUMMARY BY ELEMENT TYPE ***
+
+  TYPE      MASS
+     2   1.30911    
+
+ Range of element maximum matrix coefficients in global coordinates
+ Maximum = 669841021 at element 6.                                       
+ Minimum = 92508479.2 at element 15203.                                  
+
+   *** ELEMENT MATRIX FORMULATION TIMES
+     TYPE    NUMBER     ENAME   TOTAL ELAPSED   AVG ELAPSED
+
+        2     53418  SOLID186          4.8892   0.000091527
+ Elapsed Time at end of element matrix formulation = 31.0735791.         
+
+ *** NOTE ***                            ELAPSED TIME =      31.432   TIME= 20:50:34
+ The initial memory allocation (-m) has been exceeded.                   
+  Supplemental memory allocations are being used.                        
+
+  BLOCK LANCZOS CALCULATION OF UP TO    16 EIGENVECTORS.
+  NUMBER OF EQUATIONS              =       383607
+  MAXIMUM WAVEFRONT                =          117
+  MAXIMUM MODES STORED             =           16
+  MINIMUM EIGENVALUE               =  0.00000E+00
+  MAXIMUM EIGENVALUE               =  0.10000E+31
+
+
+
+  Memory allocated on this process
+  -------------------------------------------------------------------
+  Equation solver memory allocated                     =  2781.689 MB
+  Equation solver memory required for in-core mode     =  2650.861 MB
+  Equation solver memory required for out-of-core mode =   490.932 MB
+  Total (solver and non-solver) memory allocated       =  5372.146 MB
+
+ *** NOTE ***                            ELAPSED TIME =      38.391   TIME= 20:50:41
+ The Sparse Matrix Solver used by the Block Lanczos eigensolver is       
+ currently running in the in-core memory mode.  This memory mode uses    
+ the most amount of memory in order to avoid using the hard drive as     
+ much as possible, which most often results in the fastest solution      
+ time.  This mode is recommended if enough physical memory is present    
+ to accommodate all of the solver data.                                  
+
+  Process memory required for in-core LANCZOS Workspace             =     1.440951 GB
+  Process memory required for out-of-core LANCZOS Workspace         =     35.602951 MB
+  Lanczos Memory Mode : INCORE
+
+
+  >> Shift # 1 :  | |                                : 16 Eigenvalues Converged
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2026 R1          26.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   20:50:53  NOV 10, 2026 Elapsed Time=     50.652
+
+ Placa PLA-001 - Analisis modal libre (Al 2024-T3)                             
+
+
+ NEGATIVE FREQUENCY OF -0.5549E-02 SET TO ZERO
+ NEGATIVE FREQUENCY OF -0.5086E-02 SET TO ZERO
+ NEGATIVE FREQUENCY OF -0.2707E-02 SET TO ZERO
+
+ *** FREQUENCIES FROM BLOCK LANCZOS ITERATION ***
+
+  MODE    FREQUENCY (HERTZ)      
+
+
+    1     0.000000000000    
+    2     0.000000000000    
+    3     0.000000000000    
+    4    0.2740267452209E-02
+    5    0.4073963007686E-02
+    6    0.5489214312861E-02
+    7     1043.192148440    
+    8     1522.795613216    
+    9     1995.574085785    
+   10     2615.516762989    
+   11     2760.657626035    
+   12     4439.508054442    
+   13     4799.548705767    
+   14     5089.282700417    
+   15     5166.074636234    
+   16     6019.391650437    
+
+   *** ELEMENT RESULT CALCULATION TIMES
+     TYPE    NUMBER     ENAME   TOTAL ELAPSED   AVG ELAPSED
+
+        2     53418  SOLID186          3.7814   0.000070790
+
+   *** NODAL LOAD CALCULATION TIMES
+     TYPE    NUMBER     ENAME   TOTAL ELAPSED   AVG ELAPSED
+
+        2     53418  SOLID186          0.2334   0.000004370
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2026 R1          26.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   20:51:14  NOV 10, 2026 Elapsed Time=     71.521
+
+ Placa PLA-001 - Analisis modal libre (Al 2024-T3)                             
+
+
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****  X  DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+     1     0.00000        0.0000      -0.43417        0.702644    0.188503        0.143994        0.143994    
+     2     0.00000        0.0000       0.61791        1.000000    0.381811        0.435651        0.291657    
+     3     0.00000        0.0000      -0.26030        0.421254    0.677543E-01    0.487407        0.517560E-01
+     4    0.274027E-02    364.93      -0.74143E-01    0.119990    0.549714E-02    0.491606        0.419914E-02
+     5    0.407396E-02    245.46      -0.58276        0.943109    0.339604        0.751022        0.259416    
+     6    0.548921E-02    182.18       0.57091        0.923941    0.325940         1.00000        0.248978    
+     7     1043.19       0.95860E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     8     1522.80       0.65669E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     9     1995.57       0.50111E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    10     2615.52       0.38233E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    11     2760.66       0.36223E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    12     4439.51       0.22525E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    13     4799.55       0.20835E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    14     5089.28       0.19649E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    15     5166.07       0.19357E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    16     6019.39       0.16613E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                             1.30911                         1.00000    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****  Y  DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+     1     0.00000        0.0000      -0.20174        0.250374    0.407000E-01    0.310898E-01    0.310898E-01
+     2     0.00000        0.0000       0.17508E-01    0.021729    0.306539E-03    0.313240E-01    0.234158E-03
+     3     0.00000        0.0000       0.75469        0.936614    0.569560        0.466398        0.435074    
+     4    0.274027E-02    364.93       0.80577        1.000000    0.649258        0.962352        0.495954    
+     5    0.407396E-02    245.46      -0.21443        0.266125    0.459820E-01    0.997477        0.351246E-01
+     6    0.548921E-02    182.18       0.57476E-01    0.071331    0.330349E-02     1.00000        0.252346E-02
+     7     1043.19       0.95860E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     8     1522.80       0.65669E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     9     1995.57       0.50111E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    10     2615.52       0.38233E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    11     2760.66       0.36223E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    12     4439.51       0.22525E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    13     4799.55       0.20835E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    14     5089.28       0.19649E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    15     5166.07       0.19357E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    16     6019.39       0.16613E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                             1.30911                         1.00000    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****  Z  DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+     1     0.00000        0.0000       0.66707        0.956198    0.444979        0.339909        0.339909    
+     2     0.00000        0.0000       0.34847        0.499509    0.121431        0.432668        0.927586E-01
+     3     0.00000        0.0000       0.22359        0.320497    0.499910E-01    0.470855        0.381870E-01
+     4    0.274027E-02    364.93       0.20934E-01    0.030007    0.438227E-03    0.471190        0.334752E-03
+     5    0.407396E-02    245.46       0.45342        0.649949    0.205590        0.628236        0.157046    
+     6    0.548921E-02    182.18       0.69762        1.000000    0.486681         1.00000        0.371764    
+     7     1043.19       0.95860E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     8     1522.80       0.65669E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     9     1995.57       0.50111E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    10     2615.52       0.38233E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    11     2760.66       0.36223E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    12     4439.51       0.22525E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    13     4799.55       0.20835E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    14     5089.28       0.19649E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    15     5166.07       0.19357E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    16     6019.39       0.16613E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                             1.30911                         1.00000    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****ROTX DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+     1     0.00000        0.0000       0.51801E-01    0.663670    0.268329E-02    0.172760        0.172760    
+     2     0.00000        0.0000       0.78052E-01    1.000000    0.609205E-02    0.564989        0.392229    
+     3     0.00000        0.0000       0.15568E-01    0.199457    0.242361E-03    0.580594        0.156041E-01
+     4    0.274027E-02    364.93       0.30048E-02    0.038497    0.902852E-05    0.581175        0.581290E-03
+     5    0.407396E-02    245.46       0.72149E-01    0.924376    0.520549E-02    0.916323        0.335149    
+     6    0.548921E-02    182.18       0.36051E-01    0.461883    0.129965E-02     1.00000        0.836766E-01
+     7     1043.19       0.95860E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     8     1522.80       0.65669E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     9     1995.57       0.50111E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    10     2615.52       0.38233E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    11     2760.66       0.36223E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    12     4439.51       0.22525E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    13     4799.55       0.20835E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    14     5089.28       0.19649E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    15     5166.07       0.19357E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    16     6019.39       0.16613E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                            0.155319E-01                     1.00000    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****ROTY DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+     1     0.00000        0.0000      -0.98782E-01    1.000000    0.975784E-02    0.544831        0.544831    
+     2     0.00000        0.0000      -0.35330E-01    0.357653    0.124818E-02    0.614524        0.696924E-01
+     3     0.00000        0.0000       0.16171E-01    0.163702    0.261494E-03    0.629124        0.146006E-01
+     4    0.274027E-02    364.93      -0.44639E-01    0.451892    0.199262E-02    0.740383        0.111258    
+     5    0.407396E-02    245.46      -0.36253E-01    0.367002    0.131429E-02    0.813766        0.733835E-01
+     6    0.548921E-02    182.18      -0.57753E-01    0.584653    0.333542E-02     1.00000        0.186234    
+     7     1043.19       0.95860E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     8     1522.80       0.65669E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     9     1995.57       0.50111E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    10     2615.52       0.38233E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    11     2760.66       0.36223E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    12     4439.51       0.22525E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    13     4799.55       0.20835E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    14     5089.28       0.19649E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    15     5166.07       0.19357E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    16     6019.39       0.16613E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                            0.179098E-01                     1.00000    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+          ***** PARTICIPATION FACTOR CALCULATION *****ROTZ DIRECTION
+                                                                                  CUMULATIVE     RATIO EFF.MASS
+  MODE   FREQUENCY       PERIOD      PARTIC.FACTOR     RATIO    EFFECTIVE MASS   MASS FRACTION   TO TOTAL MASS
+     1     0.00000        0.0000      -0.26466E-01    0.226556    0.700451E-03    0.210340E-01    0.210340E-01
+     2     0.00000        0.0000      -0.82677E-01    0.707739    0.683553E-02    0.226299        0.205265    
+     3     0.00000        0.0000       0.70185E-01    0.600801    0.492591E-02    0.374220        0.147921    
+     4    0.274027E-02    364.93       0.11682        1.000000    0.136466E-01    0.784018        0.409797    
+     5    0.407396E-02    245.46       0.83681E-01    0.716328    0.700245E-02    0.994295        0.210278    
+     6    0.548921E-02    182.18      -0.13783E-01    0.117985    0.189966E-03     1.00000        0.570452E-02
+     7     1043.19       0.95860E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     8     1522.80       0.65669E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+     9     1995.57       0.50111E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    10     2615.52       0.38233E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    11     2760.66       0.36223E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    12     4439.51       0.22525E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    13     4799.55       0.20835E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    14     5089.28       0.19649E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    15     5166.07       0.19357E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+    16     6019.39       0.16613E-03    0.0000        0.000000     0.00000         1.00000         0.00000    
+ -----------------------------------------------------------------------------------------------------------------
+   sum                                                            0.333010E-01                     1.00000    
+ -----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+ *** NOTE ***                            ELAPSED TIME =      71.522   TIME= 20:51:14
+ The modes requested are mass normalized (Nrmkey on MODOPT).  However,   
+ the modal masses and kinetic energies below are calculated with unit    
+ normalized modes.                                                       
+
+        ***** MODAL MASSES, KINETIC ENERGIES, AND TRANSLATIONAL EFFECTIVE MASSES SUMMARY *****
+
+                                                                         EFFECTIVE MASS
+  MODE  FREQUENCY   MODAL MASS     KENE      |      X-DIR      RATIO%   Y-DIR      RATIO%   Z-DIR      RATIO% 
+     1   0.000      0.4748       0.000       |    0.1885       14.40  0.4070E-01    3.11  0.4450       33.99
+     2   0.000      0.4765       0.000       |    0.3818       29.17  0.3065E-03    0.02  0.1214        9.28
+     3   0.000      0.8381       0.000       |    0.6775E-01    5.18  0.5696       43.51  0.4999E-01    3.82
+     4  0.2740E-02  0.8180      0.1213E-03   |    0.5497E-02    0.42  0.6493       49.60  0.4382E-03    0.03
+     5  0.4074E-02  0.5689      0.1864E-03   |    0.3396       25.94  0.4598E-01    3.51  0.2056       15.70
+     6  0.5489E-02  0.4817      0.2865E-03   |    0.3259       24.90  0.3303E-02    0.25  0.4867       37.18
+     7   1043.      0.1782      0.3828E+07   |     0.000        0.00   0.000        0.00   0.000        0.00
+     8   1523.      0.2430      0.1112E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+     9   1996.      0.1725      0.1356E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+    10   2616.      0.1493      0.2016E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+    11   2761.      0.1652      0.2486E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+    12   4440.      0.2352      0.9152E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+    13   4800.      0.1444      0.6566E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+    14   5089.      0.2684      0.1372E+09   |     0.000        0.00   0.000        0.00   0.000        0.00
+    15   5166.      0.1782      0.9390E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+    16   6019.      0.8687E-01  0.6213E+08   |     0.000        0.00   0.000        0.00   0.000        0.00
+ --------------------------------------------------------------------------------------------------------------
+   sum                                       |     1.309      100.00   1.309      100.00   1.309      100.00
+ --------------------------------------------------------------------------------------------------------------
+
+
+ *** MAPDL BINARY FILE STATISTICS
+  BUFFER SIZE USED= 16384
+      294.438 MB WRITTEN ON ASSEMBLED MATRIX FILE: placa.full
+       47.375 MB WRITTEN ON MODAL MATRIX FILE: placa.mode
+     1782.688 MB WRITTEN ON RESULTS FILE: placa.rst
+
+ SET PARAMETER DIMENSIONS ON  FRQ TYPE=ARRA  DIMENSIONS=    16     1     1
+
+ *DO LOOP ON PARAMETER= K FROM  1.0000     TO  16.000     BY  1.0000    
+
+ *GET  FRQ       FROM  MODE      1  ITEM=FREQ       VALUE=  0.00000000    
+
+ *ENDDO  INDEX= K                               
+
+ FINISH SOLUTION PROCESSING
+
+ RESULTS WRITTEN TO FILE: placa.mode
+    TOTAL SIZE =     1087.250 MB
+
+
+ ***** ROUTINE COMPLETED *****  ELAPSED TIME =        75.442
+
+
+
+ OPENED FILE= resultados.txt FOR COMMAND FILE DATA 
+
+
+ *DO LOOP ON PARAMETER= K FROM  1.0000     TO  16.000     BY  1.0000    
+
+ PARAMETER FK =     0.000000000    
+
+ *ENDDO  INDEX= K                               
+
+  COMMAND FILE CLOSED 
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2026 R1          26.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   20:51:18  NOV 10, 2026 Elapsed Time=     75.665
+
+ Placa PLA-001 - Analisis modal libre (Al 2024-T3)                             
+
+
+
+          ***** MAPDL RESULTS INTERPRETATION (POST1) *****
+
+ *** NOTE ***                            ELAPSED TIME =      75.665   TIME= 20:51:18
+ Reading results into the database (SET command) will update the current 
+ displacement and force boundary conditions in the database with the     
+ values from the results file for that load set.  Note that any          
+ subsequent solutions will use these values unless action is taken to    
+ either SAVE the current values or not overwrite them (/EXIT,NOSAVE).    
+
+ /SHOW SWITCH PLOTS TO  PNG         - RASTER MODE.
+
+ GRAPHICS FILE PIXEL RESOLUTION =   1200
+
+ RED=100% GREEN=100% BLUE=100%
+  for color index  0.
+
+ RED=0% GREEN=0% BLUE=0%
+  for color index 15.
+
+ view point for window  1    1.0000     -1.2000      1.4000    
+
+ ROTATION ANGLE FOR WINDOW 1 IS     0.00 ABOUT AXIS ZS
+ DATE/TIME DISPLAY = 0
+ XYZ TRIAD DISPLAY SET TO LEFT BOTTOM 
+
+ TITLE= 
+ Malla: SOLID186 - 127869 nodos, 53418 elementos                               
+
+
+ PRODUCE ELEMENT PLOT IN DSYS =   0
+
+ CUMULATIVE DISPLAY NUMBER   1 WRITTEN TO FILE placa000.png      - RASTER MODE.
+ DISPLAY TITLE= 
+ Malla: SOLID186 - 127869 nodos, 53418 elementos                         
+
+  ELEMENT OUTLINE STYLE FOR WINDOW 1 IS -1  0=DEFAULT, 1=ALTERNATE, -1=NONE
+
+ EDGE KEY FOR WINDOW 1 IS 1 WITH TOLERANCE ANGLE OF  45.0 DEGREES.
+
+ DISTORTION SCALE FOR WINDOW 1   0.80000E-02
+
+ *DO LOOP ON PARAMETER= K FROM  1.0000     TO  16.000     BY  1.0000    
+
+
+ USE LOAD STEP     1  SUBSTEP     1  FOR LOAD CASE 0 
+
+ SET COMMAND GOT LOAD STEP=     1  SUBSTEP=     1  CUMULATIVE ITERATION=     1
+   TIME/FREQUENCY=  0.0000    
+ TITLE= Placa PLA-001 - Analisis modal libre (Al 2024-T3)                       
+
+ PARAMETER FK =     0.000000000    
+
+ *IF  k  ( =   1.00000     )  LE  
+      6  ( =   6.00000     )  THEN    
+
+ TITLE= 
+ Modo 1 (cuerpo rigido) - f = 0 Hz                                             
+
+
+ *ELSE
+
+ *ENDIF
+
+ DISPLAY NODAL SOLUTION,  ITEM=U     COMP=SUM               
+                          KUND=1
+
+ *** NOTE ***
+
+ libpng version 1.6.52
+ Copyright (c) 2018-2025 Cosmin Truta
+ Copyright (c) 1998-2002,2004,2006-2018 Glenn Randers-Pehrson
+ Copyright (c) 1996-1997 Andreas Dilger
+ Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
+
+ ZLIB Version 1.3.1 Copyright (C) 1995-1998 Jean-loup Gailly and Mark Adler
+
+ CUMULATIVE DISPLAY NUMBER   2 WRITTEN TO FILE placa001.png      - RASTER MODE.
+ DISPLAY TITLE= 
+ Modo 1 (cuerpo rigido) - f = 0 Hz                                       
+
+ *ENDDO  INDEX= K                               
+
+ EXIT THE MAPDL POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  ELAPSED TIME =       136.647
+
+
+
+ ***** END OF INPUT ENCOUNTERED *****
+
+ PURGE ALL SOLUTION AND POST DATA
+ SAVE ALL MODEL DATA
+
+ ALL CURRENT MAPDL DATA WRITTEN TO FILE NAME= placa.db
+  FOR POSSIBLE RESUME FROM THIS POINT
+
+
+ NUMBER OF WARNING MESSAGES ENCOUNTERED=          6
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=          0
+
++--------------------- M A P D L   S T A T I S T I C S ------------------------+
+
+Release: 2026 R1            Build: 26.1       Update: UP20260202   Platform: WINDOWS x64 
+Date Run: 11/10/2026   Time: 20:52     Process ID: 26956
+Operating System: Windows 11  (Build: 26300)
+
+Processor Model: 13th Gen Intel(R) Core(TM) i7-13650HX
+
+Compiler: Intel(R) Fortran Compiler Classic Version 2021.9  (Build: 20230302)
+          Intel(R) C/C++ Compiler Classic Version 2021.9  (Build: 20230302)
+          Intel(R) oneAPI Math Kernel Library Version 2024.2.3-Product Build 20250403
+
+Number of machines requested            :    1
+Total number of cores available         :   20
+Number of physical cores available      :   14
+Number of processes requested           :    1
+Number of threads per process requested :    4
+Total number of cores requested         :    4 (Shared Memory Parallel)                    
+
+GPU Acceleration: Not Requested
+
+Job Name: placa
+Input File: placa_modal.inp
+Working Directory: C:\Users\oliva\AppData\Local\Temp\claude\59cc8b8309dc54d2\00ef2486-698b-4082-a549-ad667659c05d\scratchpad\runs\fina2
+
+Total CPU time for main thread                    :      112.8 seconds
+Total CPU time summed for all threads             :      189.8 seconds
+
+Elapsed time spent obtaining a license            :        1.5 seconds
+Elapsed time spent pre-processing model (/PREP7)  :       19.7 seconds
+Elapsed time spent solution - preprocessing       :        0.3 seconds
+Elapsed time spent computing solution             :       45.6 seconds
+   Elapsed time in element formation & assembly   :        5.1 seconds
+   Elapsed time in equation solver                :       19.8 seconds
+   Elapsed time in element result calculations    :       20.6 seconds
+Elapsed time spent solution - postprocessing      :        0.0 seconds
+Elapsed time spent post-processing model (/POST1) :       61.0 seconds
+ 
+Eigensolver used                                  :            Block Lanczos
+Sparse direct equation solver computational rate  :       76.0 Gflops
+
+Sum of disk space used on all processes           :     2190.0 MB
+
+Sum of memory used on all processes               :     4542.0 MB
+Sum of memory allocated on all processes          :     6352.0 MB
+Physical memory available                         :         64 GB
+Total amount of I/O written to disk               :        1.9 GB
+Total amount of I/O read from disk                :        2.0 GB
+
++------------------ E N D   M A P D L   S T A T I S T I C S -------------------+
+
+
+ *-----------------------------------------------------------------------------*
+ |                                                                             |
+ |                               RUN COMPLETED                                 |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |  Ansys MAPDL 2026 R1         Build 26.1         UP20260202    WINDOWS x64   |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |  Database Requested(-db)  1024 MB     Scratch Memory Requested      1024 MB |
+ |  Maximum Database Used     353 MB     Maximum Scratch Memory Used   4189 MB |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |        CP Time      (sec) =        189.828       Time  =  20:52:30          |
+ |        Elapsed Time (sec) =        147.219       Date  =  11/10/2026        |
+ |                                                                             |
+ *-----------------------------------------------------------------------------*

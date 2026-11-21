@@ -1,0 +1,149 @@
+! ================================================================
+!  Analisis modal libre-libre de la placa PLA-001 (desde cero)
+!  Unidades SI: m, kg, s, Pa
+!  Geometria segun plano PLA-001 (cotas en mm convertidas a m)
+! ================================================================
+/BATCH
+/TITLE,Placa PLA-001 - Analisis modal libre (Al 2024-T3)
+/PREP7
+mm = 1e-3
+
+! ---------- Dimensiones del plano ----------
+L   = 202*mm        ! largo (X)
+W   = 188*mm        ! ancho (Y)
+T   = 12.7*mm       ! espesor (Z)
+r1  = 4.00*mm/2     ! barrenos chicos Ø4.00 (x63)
+r2  = 9.53*mm/2     ! barrenos grandes Ø9.53 = 3/8 in (x2)
+x0  = 27*mm         ! primera columna desde el borde izquierdo
+dx  = 25*mm         ! 25 x 6
+y0  = 18*mm         ! primera fila desde el borde inferior
+dy  = 18.5*mm       ! 18.5 x 8
+! barrenos grandes: el inferior a 62 del borde derecho y 33 del inferior,
+! el superior 101.60 a la izquierda y 101.60 arriba del inferior
+xb2 = L-62*mm
+yb2 = 33*mm
+xb1 = xb2-101.6*mm
+yb1 = yb2+101.6*mm
+
+! ---------- Material: Aluminio 2024-T3 ----------
+MP,EX,1,73.1e9
+MP,PRXY,1,0.33
+MP,DENS,1,2780
+
+! ---------- Elementos ----------
+ET,1,MESH200,6       ! cuadrilatero de 8 nodos solo para mallar la cara
+ET,2,SOLID186        ! hexaedro cuadratico de 20 nodos
+
+! ---------- Geometria 2D (cara) ----------
+RECTNG,0,L,0,W
+*DO,i,1,7
+  *DO,j,1,9
+    CYL4,x0+(i-1)*dx,y0+(j-1)*dy,r1
+  *ENDDO
+*ENDDO
+CYL4,xb1,yb1,r2
+CYL4,xb2,yb2,r2
+ASEL,S,AREA,,2,66
+CM,AGUJ,AREA
+ALLSEL
+ASBA,1,AGUJ
+ALLSEL
+
+! ---------- Malla ----------
+! (la version Student limita el modelo a 128 000 nodos)
+! Parametros de malla; se pueden cambiar desde la linea de comandos
+! (p. ej. MAPDL -b -i placa_modal.inp -hs 3 -nd 3 -nl 3)
+*GET,_t,PARM,hs,TYPE
+*IF,_t,EQ,-1,THEN
+  hs = 4             ! tamano de elemento en la cara (mm)
+*ENDIF
+*GET,_t,PARM,nd,TYPE
+*IF,_t,EQ,-1,THEN
+  nd = 2             ! divisiones por cuarto de barreno chico
+*ENDIF
+*GET,_t,PARM,nl,TYPE
+*IF,_t,EQ,-1,THEN
+  nl = 3             ! capas de elementos en el espesor
+*ENDIF
+ESIZE,hs*mm
+LSEL,S,RADIUS,,r1
+LESIZE,ALL,,,nd      ! 4*nd divisiones por barreno chico
+LSEL,S,RADIUS,,r2
+LESIZE,ALL,,,2*nd    ! 8*nd divisiones por barreno grande
+ALLSEL
+TYPE,1
+MSHAPE,0,2D
+MSHKEY,0
+AMESH,ALL
+! extrusion a traves del espesor: nl capas de hexaedros cuadraticos
+TYPE,2
+MAT,1
+EXTOPT,ESIZE,nl,0
+EXTOPT,ACLEAR,1
+VEXT,ALL,,,0,0,T
+ACLEAR,ALL
+ETDELE,1
+ALLSEL
+
+*GET,nn,NODE,0,COUNT
+*GET,ne,ELEM,0,COUNT
+VSUM
+*GET,vtot,VOLU,0,VOLU
+FINISH
+
+! ---------- Solucion modal libre (sin restricciones) ----------
+/SOLU
+ANTYPE,MODAL
+MODOPT,LANB,16,0,,,OFF   ! 16 modos desde 0 Hz: 6 de cuerpo rigido + 10 elasticos
+MXPAND,16,,,YES
+SOLVE
+*DIM,frq,ARRAY,16
+*DO,k,1,16
+  *GET,frq(k),MODE,k,FREQ
+*ENDDO
+FINISH
+
+! ---------- Reporte en texto ----------
+*CFOPEN,resultados,txt
+*VWRITE,nn,ne
+('Nodos: ',F10.0,'   Elementos: ',F10.0)
+*VWRITE,vtot*1e9,vtot*2780
+('Volumen (mm3): ',F12.1,'   Masa (kg): ',F10.5)
+*VWRITE
+('Modo   Frecuencia (Hz)')
+*VWRITE,hs,nd*4,nl
+('Malla: ESIZE (mm)=',F5.2,'  div. barreno chico=',F4.0,'  capas=',F3.0)
+*DO,k,1,16
+  fk = frq(k)
+*VWRITE,k,fk
+(F4.0,F20.4)
+*ENDDO
+*CFCLOS
+
+! ---------- Imagenes: malla y formas modales ----------
+/POST1
+/SHOW,PNG
+/GFILE,1200
+/RGB,INDEX,100,100,100,0
+/RGB,INDEX,0,0,0,15
+/VIEW,1,1,-1.2,1.4
+/ANG,1
+/PLOPTS,DATE,0
+/TRIAD,LBOT
+/TITLE,Malla: SOLID186 - %nn% nodos, %ne% elementos
+EPLOT
+/GLINE,1,-1            ! sin lineas de elementos en los contornos
+/EDGE,1,1
+/DSCALE,1,0.008        ! escala de deformacion (modos normalizados a masa)
+*DO,k,1,16
+  SET,1,k
+  fk = frq(k)
+  *IF,k,LE,6,THEN
+    /TITLE,Modo %k% (cuerpo rigido) - f = %fk% Hz
+  *ELSE
+    /TITLE,Modo elastico %k-6% - f = %fk% Hz
+  *ENDIF
+  PLNSOL,U,SUM,1
+*ENDDO
+/SHOW,CLOSE
+FINISH
